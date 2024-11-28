@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: common
+  messages:
+    basename: messages/messages
+
+logging:
+  level:
+    p6spy: info
+    com:
+      zaxxer:
+        hikari: INFO
