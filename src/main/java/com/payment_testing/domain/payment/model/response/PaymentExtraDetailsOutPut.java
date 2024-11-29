@@ -1,5 +1,6 @@
 package com.payment_testing.domain.payment.model.response;
 
+import com.payment_testing.common.utils.TimeConverter;
 import com.payment_testing.domain.payment.enums.PSPConfirmationStatus;
 import com.payment_testing.domain.payment.enums.PaymentEventMethod;
 import com.payment_testing.domain.payment.enums.PaymentEventType;
@@ -43,7 +44,7 @@ public class PaymentExtraDetailsOutPut {
         return PaymentExtraDetailsOutPut.builder()
                 .method(PaymentEventMethod.getByPaymentEventMethod(tossPaymentConfirmationResponse.getMethod()))
                 .type(PaymentEventType.getByPaymentEventType(tossPaymentConfirmationResponse.getType()))
-                .approvedAt(LocalDateTime.parse(tossPaymentConfirmationResponse.getApprovedAt(), DateTimeFormatter.ISO_OFFSET_DATE_TIME))
+                .approvedAt(TimeConverter.convertStringDateTimeToLocalDateTime(tossPaymentConfirmationResponse.getApprovedAt()))
                 .orderName(tossPaymentConfirmationResponse.getOrderName())
                 .pspConfirmationStatus(PSPConfirmationStatus.get(tossPaymentConfirmationResponse.getStatus()))
                 .totalAmount(BigDecimal.valueOf(tossPaymentConfirmationResponse.getTotalAmount()))

@@ -27,11 +27,7 @@ public interface TossPaymentClient {
     ResponseEntity<String> paymentConfirm(@RequestHeader("Idempotency-Key") String idempotencyKey, @RequestBody final PaymentConfirmInPut request);
 
     /**
-     * <h1>신용카드 - (결제) 승인신청 API</h1> </br>
-     *
-     * @author hun
-     * @version 1.0.0
-     * @date 2024/06/19
+     * <h1>신용카드 - (결제) 승인신청 API - 강제 에러 발생 전용 API</h1> </br>
      **/
     @PostMapping(value = "/v1/payments/confirm", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<String> paymentError(@RequestHeader("Idempotency-Key") String idempotencyKey, @RequestHeader("TossPayments-Test-Code") String testErrorCode, @RequestBody final PaymentConfirmInPut request);
@@ -39,13 +35,9 @@ public interface TossPaymentClient {
 
     /**
      * <h1>신용카드 - 승인조회 API</h1> </br>
-     *
-     * @author hun
-     * @version 1.0.0
-     * @date 2024/06/19
      **/
-    @GetMapping(value = "/v1/payments/card/{transactionId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<String> getPayments(@PathVariable("transactionId") final String transactionId);
+    @GetMapping(value = "/v1/payments/{paymentKey}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<String> getPayments(@PathVariable("paymentKey") final String paymentKey);
 
 
     /**

@@ -1,6 +1,5 @@
-package com.payment_testing.domain.payment.service;
+package com.payment_testing.domain.payment.service.toss;
 
-import com.payment_testing.api.payment.model.request.PaymentConfirmRequest;
 import com.payment_testing.domain.payment.model.request.PaymentConfirmInPut;
 import com.payment_testing.domain.payment.model.response.PaymentExecutionResultOutPut;
 import com.payment_testing.domain.payment.model.response.toss.TossPaymentConfirmationWithPspRawDataResponse;

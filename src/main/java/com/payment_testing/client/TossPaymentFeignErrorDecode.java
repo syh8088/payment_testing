@@ -46,14 +46,14 @@ public class TossPaymentFeignErrorDecode implements ErrorDecoder {
                 log.error(":: [클라이언트] 결제 오류 내용     \t => {} ::", paymentErrorResponse.getMessage());
                 log.error(":: [클라이언트] 결제 오류 코드     \t => {} ::", paymentErrorResponse.getCode());
 
-                throw new PaymentException(PSPErrorCode.CLIENT_ERROR, new String[]{paymentErrorResponse.getMessage()}, responseBody);
+                throw new PaymentException(PSPErrorCode.CLIENT_ERROR, paymentErrorResponse.getCode(), new String[]{paymentErrorResponse.getMessage()}, responseBody);
 
             case SERVER_ERROR:
                 log.error(":: [서버]     결제 요청 URI     \t => {} ::", response.request().url());
                 log.error(":: [서버]     결제 오류 내용     \t => {} ::", paymentErrorResponse.getMessage() );
                 log.error(":: [서버]     결제 오류 코드     \t => {} ::", paymentErrorResponse.getCode());
 
-                throw new PaymentException(PSPErrorCode.SERVER_ERROR, new String[]{paymentErrorResponse.getMessage()}, responseBody);
+                throw new PaymentException(PSPErrorCode.SERVER_ERROR, paymentErrorResponse.getCode(), new String[]{paymentErrorResponse.getMessage()}, responseBody);
 
             default:
                 log.error(":: [서버]     결제 요청 Default \t => {} ::", "정의되지 않은 오류.");
@@ -61,7 +61,7 @@ public class TossPaymentFeignErrorDecode implements ErrorDecoder {
                 log.error(":: [서버]     결제 오류 내용     \t => {} ::", paymentErrorResponse.getMessage() );
                 log.error(":: [서버]     결제 오류 코드     \t => {} ::", paymentErrorResponse.getCode());
 
-                throw new PaymentException(PSPErrorCode.SERVER_ERROR, new String[]{paymentErrorResponse.getMessage()}, responseBody);
+                throw new PaymentException(PSPErrorCode.SERVER_ERROR, paymentErrorResponse.getCode(), new String[]{paymentErrorResponse.getMessage()}, responseBody);
         }
     }
 
@@ -88,8 +88,6 @@ public class TossPaymentFeignErrorDecode implements ErrorDecoder {
                         error.isRetryableError()
                 );
             }
-
-            throw new PaymentException(PSPErrorCode.CLIENT_ERROR, new String[]{tossFailureResponse.getMessage()});
         }
     }
 

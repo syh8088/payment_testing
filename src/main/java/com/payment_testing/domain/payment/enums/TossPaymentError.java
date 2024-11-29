@@ -103,4 +103,8 @@ public enum TossPaymentError {
         }
         return UNKNOWN;
     }
+
+    public boolean isAlreadyProcessedPayment() {
+        return this == ALREADY_PROCESSED_PAYMENT;
+    }
 }

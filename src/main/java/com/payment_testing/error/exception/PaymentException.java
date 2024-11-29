@@ -7,6 +7,7 @@ import com.payment_testing.error.errorCode.ErrorCode;
 public class PaymentException extends RuntimeException {
 
     private ErrorCode errorCode;
+    private String pspErrorCode;
     private String message;
     private int httpStatus;
     private String pspRawData;
@@ -29,9 +30,10 @@ public class PaymentException extends RuntimeException {
         this.httpStatus = errorCode.getHttpStatus();
     }
 
-    public PaymentException(ErrorCode errorCode, Object[] errorMessage, String pspRawData) {
+    public PaymentException(ErrorCode errorCode, String pspErrorCode, Object[] errorMessage, String pspRawData) {
         super(errorCode.getCode());
         this.errorCode = errorCode;
+        this.pspErrorCode = pspErrorCode;
         this.message = CustomMessageHandler.getMessage(errorCode.getCodePath(), errorMessage);
         this.httpStatus = errorCode.getHttpStatus();
         this.pspRawData = pspRawData;
@@ -57,4 +59,9 @@ public class PaymentException extends RuntimeException {
     public String getPspRawData() {
         return pspRawData;
     }
+
+    public String getPspErrorCode() {
+        return pspErrorCode;
+    }
+
 }
