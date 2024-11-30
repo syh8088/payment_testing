@@ -19,7 +19,7 @@ public class PaymentException extends RuntimeException {
     public PaymentException(ErrorCode errorCode) {
         super(errorCode.getCode());
         this.errorCode = errorCode;
-        this.message = CustomMessageHandler.getMessage(errorCode.getCode());
+        this.message = CustomMessageHandler.getMessage(errorCode.getCodePath());
         this.httpStatus = errorCode.getHttpStatus();
     }
 

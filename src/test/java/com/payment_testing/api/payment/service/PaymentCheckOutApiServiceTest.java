@@ -6,6 +6,7 @@ import com.payment_testing.common.IdempotencyCreator;
 import com.payment_testing.domain.payment.model.entity.Product;
 import com.payment_testing.domain.payment.model.response.ProductOutPut;
 import com.payment_testing.domain.product.repository.ProductRepository;
+import com.payment_testing.error.exception.BusinessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
@@ -55,6 +57,20 @@ class PaymentCheckOutApiServiceTest {
         assertThat(paymentCheckOutResponse.getOrderId()).isEqualTo(idempotency);
 
         assertThat(paymentCheckOutResponse.getAmount()).isEqualByComparingTo(BigDecimal.valueOf(6000));
+    }
+
+    @Test
+    @DisplayName("재고가 부족한 상품으로 주문을 생성하려는 경우 예외가 발생한다.")
+    void createOrderWithNoStock() {
+
+        // given
+        List<Long> productNoList = List.of(1L, 2L, 3L);
+        PaymentCheckOutRequest paymentCheckOutRequest = PaymentCheckOutRequest.of(productNoList);
+
+        // when // then
+        assertThatThrownBy(() -> paymentCheckOutApiService.paymentCheckOut(paymentCheckOutRequest))
+                .isInstanceOf(BusinessException.class)
+                .hasMessage("상품이 존재하지 않습니다.");
     }
 
     private Product createProduct(String productId, String name, BigDecimal price) {
