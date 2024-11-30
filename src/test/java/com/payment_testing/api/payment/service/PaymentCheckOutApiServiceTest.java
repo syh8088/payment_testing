@@ -4,7 +4,7 @@ import com.payment_testing.api.payment.model.request.PaymentCheckOutRequest;
 import com.payment_testing.api.payment.model.response.PaymentCheckOutResponse;
 import com.payment_testing.common.IdempotencyCreator;
 import com.payment_testing.domain.payment.model.entity.Product;
-import com.payment_testing.domain.payment.model.response.ProductOutPut;
+import com.payment_testing.domain.product.model.response.ProductOutPut;
 import com.payment_testing.domain.payment.repository.PaymentEventRepository;
 import com.payment_testing.domain.payment.repository.PaymentOrderRepository;
 import com.payment_testing.domain.product.repository.ProductRepository;
@@ -21,8 +21,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest

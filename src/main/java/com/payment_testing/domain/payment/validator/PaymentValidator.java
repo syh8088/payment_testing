@@ -1,6 +1,6 @@
 package com.payment_testing.domain.payment.validator;
 
-import com.payment_testing.domain.payment.model.response.ProductOutPut;
+import com.payment_testing.domain.product.model.response.ProductOutPut;
 import com.payment_testing.error.errorCode.PaymentErrorCode;
 import com.payment_testing.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;

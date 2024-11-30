@@ -4,7 +4,7 @@ import com.payment_testing.domain.payment.enums.PaymentEventMethod;
 import com.payment_testing.domain.payment.enums.PaymentEventType;
 import com.payment_testing.domain.payment.model.entity.PaymentEvent;
 import com.payment_testing.domain.payment.model.response.PaymentCheckOutOutPut;
-import com.payment_testing.domain.payment.model.response.ProductOutPut;
+import com.payment_testing.domain.product.model.response.ProductOutPut;
 import com.payment_testing.domain.payment.repository.PaymentEventRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

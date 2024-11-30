@@ -1,4 +1,4 @@
-package com.payment_testing.domain.payment.model.response;
+package com.payment_testing.domain.product.model.response;
 
 import com.payment_testing.domain.payment.model.entity.Product;
 import lombok.Builder;
@@ -11,10 +11,10 @@ import java.util.Objects;
 @Getter
 public class ProductOutPut {
 
-    private long no;
-    private String productId;
-    private String name;
-    private BigDecimal price;
+    private final long no;
+    private final String productId;
+    private final String name;
+    private final BigDecimal price;
 
     @Builder
     private ProductOutPut(long no, String productId, String name, BigDecimal price) {

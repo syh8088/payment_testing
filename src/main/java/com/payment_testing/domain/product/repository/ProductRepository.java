@@ -13,4 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
 
     @Query("select p from Product as p where p.no in :productNoList")
     List<Product> selectProductListByProductNoList(@Param("productNoList") List<Long> productNoList);
+
+    @Query("select p from Product as p")
+    List<Product> selectProductAll();
 }

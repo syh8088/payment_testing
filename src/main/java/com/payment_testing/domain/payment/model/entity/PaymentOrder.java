@@ -2,7 +2,7 @@ package com.payment_testing.domain.payment.model.entity;
 
 import com.payment_testing.common.CommonEntity;
 import com.payment_testing.domain.payment.enums.PaymentOrderStatus;
-import com.payment_testing.domain.payment.model.response.ProductOutPut;
+import com.payment_testing.domain.product.model.response.ProductOutPut;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -1,7 +1,7 @@
-package com.payment_testing.domain.payment.service;
+package com.payment_testing.domain.product.service;
 
 import com.payment_testing.domain.payment.model.entity.Product;
-import com.payment_testing.domain.payment.model.response.ProductOutPut;
+import com.payment_testing.domain.product.model.response.ProductOutPut;
 import com.payment_testing.domain.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,5 +23,10 @@ public class ProductQueryService {
         return products.stream()
                 .map(product -> ProductOutPut.of(product.getNo(), product.getProductId(), product.getName(), product.getPrice()))
                 .toList();
+    }
+
+    public List<ProductOutPut> selectProductAll() {
+        List<Product> products = productRepository.selectProductAll();
+        return ProductOutPut.of(products);
     }
 }

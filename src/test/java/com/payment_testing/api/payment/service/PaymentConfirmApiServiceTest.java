@@ -9,7 +9,7 @@ import com.payment_testing.client.TossPaymentClient;
 import com.payment_testing.domain.payment.enums.PaymentOrderStatus;
 import com.payment_testing.domain.payment.model.entity.Product;
 import com.payment_testing.domain.payment.model.request.PaymentConfirmInPut;
-import com.payment_testing.domain.payment.model.response.ProductOutPut;
+import com.payment_testing.domain.product.model.response.ProductOutPut;
 import com.payment_testing.domain.payment.repository.PaymentEventRepository;
 import com.payment_testing.domain.payment.repository.PaymentOrderHistoryRepository;
 import com.payment_testing.domain.payment.repository.PaymentOrderRepository;
@@ -36,8 +36,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest

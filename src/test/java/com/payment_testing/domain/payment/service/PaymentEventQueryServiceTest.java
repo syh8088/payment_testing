@@ -7,7 +7,7 @@ import com.payment_testing.domain.payment.enums.PaymentEventMethod;
 import com.payment_testing.domain.payment.enums.PaymentEventType;
 import com.payment_testing.domain.payment.model.entity.PaymentEvent;
 import com.payment_testing.domain.payment.model.entity.Product;
-import com.payment_testing.domain.payment.model.response.ProductOutPut;
+import com.payment_testing.domain.product.model.response.ProductOutPut;
 import com.payment_testing.domain.payment.repository.PaymentEventRepository;
 import com.payment_testing.domain.product.repository.ProductRepository;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
@@ -22,8 +22,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
