@@ -17,4 +17,10 @@ public class PaymentCheckOutRequest {
     private PaymentCheckOutRequest(List<Long> productNoList) {
         this.productNoList = productNoList;
     }
+
+    public static PaymentCheckOutRequest of(List<Long> productNoList) {
+        return PaymentCheckOutRequest.builder()
+                .productNoList(productNoList)
+                .build();
+    }
 }

@@ -1,10 +1,8 @@
 package com.payment_testing.domain.payment.service;
 
-import com.payment_testing.common.IdempotencyCreator;
 import com.payment_testing.domain.payment.enums.PaymentEventMethod;
 import com.payment_testing.domain.payment.enums.PaymentEventType;
 import com.payment_testing.domain.payment.model.entity.PaymentEvent;
-import com.payment_testing.domain.payment.model.request.PaymentCheckOutInPut;
 import com.payment_testing.domain.payment.model.response.PaymentCheckOutOutPut;
 import com.payment_testing.domain.payment.model.response.ProductOutPut;
 import com.payment_testing.domain.payment.repository.PaymentEventRepository;
@@ -25,9 +23,7 @@ public class PaymentCheckOutQueryService {
     private final PaymentEventRepository paymentEventRepository;
 
     @Transactional
-    public PaymentCheckOutOutPut paymentCheckOut(PaymentCheckOutInPut paymentCheckOutInPut, List<ProductOutPut> productList) {
-
-        String idempotency = IdempotencyCreator.create(paymentCheckOutInPut);
+    public PaymentCheckOutOutPut paymentCheckOut(String idempotency, List<ProductOutPut> productList) {
 
         PaymentEvent paymentEvent = PaymentEvent.of(
                 idempotency,

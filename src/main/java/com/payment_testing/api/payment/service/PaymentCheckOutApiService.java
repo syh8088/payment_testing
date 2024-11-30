@@ -2,7 +2,7 @@ package com.payment_testing.api.payment.service;
 
 import com.payment_testing.api.payment.model.request.PaymentCheckOutRequest;
 import com.payment_testing.api.payment.model.response.PaymentCheckOutResponse;
-import com.payment_testing.domain.payment.model.request.PaymentCheckOutInPut;
+import com.payment_testing.common.IdempotencyCreator;
 import com.payment_testing.domain.payment.model.response.PaymentCheckOutOutPut;
 import com.payment_testing.domain.payment.model.response.ProductOutPut;
 import com.payment_testing.domain.payment.service.PaymentCheckOutQueryService;
@@ -28,8 +28,10 @@ public class PaymentCheckOutApiService {
         List<ProductOutPut> productList
                 = productQueryService.selectProductListByProductNoList(request.getProductNoList());
 
+        String idempotency = IdempotencyCreator.create(request);
+
         PaymentCheckOutOutPut paymentCheckOutOutPut = paymentCheckOutQueryService.paymentCheckOut(
-                PaymentCheckOutInPut.of(request.getProductNoList()),
+                idempotency,
                 productList
         );
 
