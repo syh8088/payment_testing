@@ -9,8 +9,8 @@ public class GlobalExceptionController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = BusinessException.class)
-    public ApiResponse handleBaseException(BusinessException e) {
+    public ApiResponse<?> handleBaseException(BusinessException e) {
 
-        return ApiResponse.of(e.getErrorCode(), HttpStatus.BAD_REQUEST, e.getMessage());
+        return ApiResponse.of(HttpStatus.BAD_REQUEST, e.getMessage(), e.getErrorCode());
     }
 }

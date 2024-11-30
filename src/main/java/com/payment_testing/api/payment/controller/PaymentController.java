@@ -1,19 +1,20 @@
 package com.payment_testing.api.payment.controller;
 
-import com.payment_testing.api.payment.model.request.PaymentConfirmRequest;
+import com.payment_testing.api.payment.model.response.PaymentEventOutPut;
+import com.payment_testing.api.payment.model.response.PaymentEventResponse;
+import com.payment_testing.api.payment.model.response.PaymentEventWithOrderResponse;
 import com.payment_testing.api.payment.service.PaymentApiService;
 import com.payment_testing.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/payments")
 public class PaymentController {
@@ -21,11 +22,12 @@ public class PaymentController {
     private final PaymentApiService paymentApiService;
 
     @GetMapping
-    public ApiResponse<?> selectPayments() {
+    public ApiResponse<PaymentEventWithOrderResponse> selectPayments() {
 
-        paymentApiService.selectPayments();
+        List<PaymentEventOutPut> paymentEventOutPutList = paymentApiService.selectPayments();
+        List<PaymentEventResponse> paymentEventResponses = PaymentEventResponse.of(paymentEventOutPutList);
+        PaymentEventWithOrderResponse paymentEventWithOrderResponse = PaymentEventWithOrderResponse.of(paymentEventResponses);
 
-        return null;
-//        return ApiResponse.ok(orderService.createOrder(request.toServiceRequest(), registeredDateTime));
+        return ApiResponse.ok(paymentEventWithOrderResponse);
     }
 }

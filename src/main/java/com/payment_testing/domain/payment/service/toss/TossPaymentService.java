@@ -121,9 +121,8 @@ public class TossPaymentService {
 
 //        request = PaymentConfirmInPut.of("tviva20241129043317yahM2", "92db7e55-74ae-36b4-a052-9c26159322f1", request.getAmount());
 
-//        final ResponseEntity<String> paymentsResponse
-//                = tossPaymentClient.paymentConfirm(request.getOrderId(), request);
-//                = tossPaymentClient.paymentConfirm("92db7e55-74ae-36b4-a052-9c26159322f1", request);
+        final ResponseEntity<String> paymentsResponse
+                = tossPaymentClient.paymentConfirm(request.getOrderId(), request);
 
         // 재시도가 불가능한 실패
 //        final ResponseEntity<String> paymentsResponse
@@ -131,8 +130,8 @@ public class TossPaymentService {
 
 
         // 재시도가 가능한 실패
-        final ResponseEntity<String> paymentsResponse
-                = tossPaymentClient.paymentError(request.getOrderId(), "ALREADY_PROCESSED_PAYMENT", request);
+//        final ResponseEntity<String> paymentsResponse
+//                = tossPaymentClient.paymentError(request.getOrderId(), "ALREADY_PROCESSED_PAYMENT", request);
 
         final JsonObject jsonObject = JsonUtils.fromJson(paymentsResponse.getBody(), JsonObject.class);
 

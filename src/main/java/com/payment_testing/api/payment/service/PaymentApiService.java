@@ -17,7 +17,7 @@ public class PaymentApiService {
     private final PaymentEventQueryService paymentEventQueryService;
 
     @Transactional(readOnly = true)
-    public void selectPayments() {
-        List<PaymentEventOutPut> paymentEventOutPutList = paymentEventQueryService.selectPayments();
+    public List<PaymentEventOutPut> selectPayments() {
+        return paymentEventQueryService.selectPayments();
     }
 }
