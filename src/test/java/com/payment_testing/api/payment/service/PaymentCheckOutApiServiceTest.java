@@ -77,8 +77,8 @@ class PaymentCheckOutApiServiceTest {
     }
 
     @Test
-    @DisplayName("재고가 부족한 상품으로 주문을 생성하려는 경우 예외가 발생한다.")
-    void createOrderWithNoStock() {
+    @DisplayName("상품이 존재하지 않는 상품을 주문 위한 CheckOut 기능을 실행시 경우 예외가 발생한다.")
+    void paymentCheckOutNoProduct() {
 
         // given
         List<Long> productNoList = List.of(1L, 2L, 3L);
@@ -94,4 +94,5 @@ class PaymentCheckOutApiServiceTest {
 
         return Product.of(productId, name, price);
     }
+
 }

@@ -50,7 +50,7 @@ public class PaymentEvent extends CommonEntity {
     @Column(name = "approved_at")
     private LocalDateTime approvedDateTime;
 
-    @Column(name = "psp_raw_data")
+    @Column(name = "psp_raw_data", columnDefinition = "LONGTEXT")
     private String pspRawData;
 
     @Column(name = "is_payment_done")

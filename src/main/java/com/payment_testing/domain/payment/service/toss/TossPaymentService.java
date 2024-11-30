@@ -119,8 +119,6 @@ public class TossPaymentService {
      **/
     private TossPaymentConfirmationWithPspRawDataResponse feignPayment(PaymentConfirmInPut request) {
 
-//        request = PaymentConfirmInPut.of("tviva20241129043317yahM2", "92db7e55-74ae-36b4-a052-9c26159322f1", request.getAmount());
-
         final ResponseEntity<String> paymentsResponse
                 = tossPaymentClient.paymentConfirm(request.getOrderId(), request);
 
