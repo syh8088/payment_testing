@@ -5,8 +5,11 @@ import com.payment_testing.api.payment.model.response.PaymentCheckOutResponse;
 import com.payment_testing.common.IdempotencyCreator;
 import com.payment_testing.domain.payment.model.entity.Product;
 import com.payment_testing.domain.payment.model.response.ProductOutPut;
+import com.payment_testing.domain.payment.repository.PaymentEventRepository;
+import com.payment_testing.domain.payment.repository.PaymentOrderRepository;
 import com.payment_testing.domain.product.repository.ProductRepository;
 import com.payment_testing.error.exception.BusinessException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
@@ -28,7 +32,20 @@ class PaymentCheckOutApiServiceTest {
     private ProductRepository productRepository;
 
     @Autowired
+    private PaymentEventRepository paymentEventRepository;
+
+    @Autowired
+    private PaymentOrderRepository paymentOrderRepository;
+
+    @Autowired
     private PaymentCheckOutApiService paymentCheckOutApiService;
+
+    @AfterEach
+    void tearDown() {
+        paymentOrderRepository.deleteAllInBatch();
+        productRepository.deleteAllInBatch();
+        paymentEventRepository.deleteAllInBatch();
+    }
 
     @Test
     @DisplayName("상품 주문 하기 위한 CheckOut 기능을 실행 합니다.")
