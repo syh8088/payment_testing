@@ -15,7 +15,7 @@ https://syh8088.github.io/2024/12/03/JAVA/TEST/PaymentTesting/PaymentTesting2
 
 - Java 17
 - Spring boot 3.2.0
-- Junit
+- Junit5
 - JPA
 - Mysql 8.x
 
