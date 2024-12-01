@@ -4,7 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public enum PaymentErrorCode implements ErrorCode {
 
-    NOT_EXIST_PRODUCT("PEC0001", HttpStatus.BAD_REQUEST.value())
+    NOT_EXIST_PRODUCT("PEC0001", HttpStatus.BAD_REQUEST.value()),
+    INVALID_PAYMENT_AMOUNT("PEC0002", HttpStatus.BAD_REQUEST.value())
 
     ,;
 

@@ -1,5 +1,6 @@
 package com.payment_testing.domain.payment.validator;
 
+import com.payment_testing.domain.payment.service.PaymentOrderQueryService;
 import com.payment_testing.domain.product.model.response.ProductOutPut;
 import com.payment_testing.error.errorCode.PaymentErrorCode;
 import com.payment_testing.error.exception.BusinessException;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +17,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class PaymentValidator {
 
+    private final PaymentOrderQueryService paymentOrderQueryService;
+
     public void isExistProduct(List<ProductOutPut> productList) {
 
         if (Objects.isNull(productList) || productList.isEmpty()) {
@@ -22,5 +26,11 @@ public class PaymentValidator {
         }
     }
 
+    public void paymentTotalAmountValidation(String orderId, String requestTotalAmount) {
+        BigDecimal totalAmount = paymentOrderQueryService.selectTotalAmountByOrderId(orderId);
 
+        if (totalAmount.compareTo(new BigDecimal(requestTotalAmount)) != 0) {
+            throw new BusinessException(PaymentErrorCode.INVALID_PAYMENT_AMOUNT);
+        }
+    }
 }

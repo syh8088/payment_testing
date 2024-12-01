@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Slf4j
@@ -41,5 +42,9 @@ public class PaymentOrderQueryService {
     @Transactional
     public void updatePaymentOrderStatusByOrderId(String orderId, PaymentOrderStatus paymentStatus) {
         paymentOrderCommendService.updatePaymentOrderStatusByOrderId(orderId, paymentStatus);
+    }
+
+    public BigDecimal selectTotalAmountByOrderId(String orderId) {
+        return paymentOrderRepository.selectTotalAmountByOrderId(orderId);
     }
 }

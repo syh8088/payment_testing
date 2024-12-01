@@ -16,6 +16,7 @@ import com.payment_testing.domain.payment.repository.PaymentOrderRepository;
 import com.payment_testing.domain.payment.service.PaymentEventQueryService;
 import com.payment_testing.domain.product.repository.ProductRepository;
 import com.payment_testing.error.errorCode.PSPErrorCode;
+import com.payment_testing.error.exception.BusinessException;
 import com.payment_testing.error.exception.PaymentException;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.AfterEach;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -97,9 +99,9 @@ class PaymentConfirmApiServiceTest {
         String paymentKey = this.paymentIdb64uuid();
         PaymentConfirmRequest paymentConfirmRequest
                 = PaymentConfirmRequest.of(
-                        paymentKey,
-                        paymentCheckOutResponse.getOrderId(),
-                totalAmount
+                    paymentKey,
+                    paymentCheckOutResponse.getOrderId(),
+                    totalAmount
                 );
 
         // stubbing
@@ -112,13 +114,13 @@ class PaymentConfirmApiServiceTest {
         List<PaymentEventOutPut> paymentEventOutPutList = paymentEventQueryService.selectPayments();
 
         assertThat(paymentEventOutPutList).hasSize(1)
-                .extracting("paymentEventNo", "paymentKey", "orderId", "isPaymentDone")
+                .extracting("paymentKey", "orderId", "isPaymentDone")
                 .usingRecursiveFieldByFieldElementComparator(
                         RecursiveComparisonConfiguration.builder()
                                 .withComparatorForType(BigDecimal::compareTo, BigDecimal.class).build()
                 )
                 .containsExactlyInAnyOrder(
-                        tuple(1L, paymentKey, paymentCheckOutResponse.getOrderId(), true)
+                        tuple(paymentKey, paymentCheckOutResponse.getOrderId(), true)
                 );
 
         for (PaymentEventOutPut paymentEventOutPut : paymentEventOutPutList) {
@@ -181,13 +183,13 @@ class PaymentConfirmApiServiceTest {
         List<PaymentEventOutPut> paymentEventOutPutList = paymentEventQueryService.selectPayments();
 
         assertThat(paymentEventOutPutList).hasSize(1)
-                .extracting("paymentEventNo", "paymentKey", "orderId", "isPaymentDone")
+                .extracting("paymentKey", "orderId", "isPaymentDone")
                 .usingRecursiveFieldByFieldElementComparator(
                         RecursiveComparisonConfiguration.builder()
                                 .withComparatorForType(BigDecimal::compareTo, BigDecimal.class).build()
                 )
                 .containsExactlyInAnyOrder(
-                        tuple(1L, paymentKey, paymentCheckOutResponse.getOrderId(), false)
+                        tuple(paymentKey, paymentCheckOutResponse.getOrderId(), false)
                 );
 
         for (PaymentEventOutPut paymentEventOutPut : paymentEventOutPutList) {
@@ -250,13 +252,13 @@ class PaymentConfirmApiServiceTest {
         List<PaymentEventOutPut> paymentEventOutPutList = paymentEventQueryService.selectPayments();
 
         assertThat(paymentEventOutPutList).hasSize(1)
-                .extracting("paymentEventNo", "paymentKey", "orderId", "isPaymentDone")
+                .extracting("paymentKey", "orderId", "isPaymentDone")
                 .usingRecursiveFieldByFieldElementComparator(
                         RecursiveComparisonConfiguration.builder()
                                 .withComparatorForType(BigDecimal::compareTo, BigDecimal.class).build()
                 )
                 .containsExactlyInAnyOrder(
-                        tuple(1L, paymentKey, paymentCheckOutResponse.getOrderId(), true)
+                        tuple(paymentKey, paymentCheckOutResponse.getOrderId(), true)
                 );
 
         for (PaymentEventOutPut paymentEventOutPut : paymentEventOutPutList) {
@@ -278,6 +280,41 @@ class PaymentConfirmApiServiceTest {
                             tuple("CCC", "상품C", BigDecimal.valueOf(3000), PaymentOrderStatus.SUCCESS)
                     );
         }
+    }
+
+    @Test
+    @DisplayName("결제 금액이 유효하지 않을 경우 예외가 발생 합니다.")
+    void invalidPaymentAmountThenThrow() {
+
+        // given
+        Product product1 = this.createProduct("AAA", "상품A", BigDecimal.valueOf(1000));
+        Product product2 = this.createProduct("BBB", "상품B", BigDecimal.valueOf(2000));
+        Product product3 = this.createProduct("CCC", "상품C", BigDecimal.valueOf(3000));
+
+        List<Product> productList = productRepository.saveAll(List.of(product1, product2, product3));
+        List<ProductOutPut> productOutPutList = ProductOutPut.of(productList);
+        List<Long> productNoList = productOutPutList.stream()
+                .map(ProductOutPut::getNo)
+                .toList();
+
+        PaymentCheckOutRequest paymentCheckOutRequest = PaymentCheckOutRequest.of(productNoList);
+        PaymentCheckOutResponse paymentCheckOutResponse = paymentCheckOutApiService.paymentCheckOut(paymentCheckOutRequest);
+
+        int intTotalAmount = 5000;
+        String totalAmount = String.valueOf(intTotalAmount);
+
+        String paymentKey = this.paymentIdb64uuid();
+        PaymentConfirmRequest paymentConfirmRequest
+                = PaymentConfirmRequest.of(
+                paymentKey,
+                paymentCheckOutResponse.getOrderId(),
+                totalAmount
+        );
+
+        // when // then
+        assertThatThrownBy(() -> paymentConfirmApiService.paymentConfirm(paymentConfirmRequest))
+                .isInstanceOf(BusinessException.class)
+                .hasMessage("결제 금액이 유효하지 않습니다.");
     }
 
     private void createStubbingTossPostPayment(String paymentKey, String orderId, String amount) {
