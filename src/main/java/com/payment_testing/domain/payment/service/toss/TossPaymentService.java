@@ -42,7 +42,7 @@ public class TossPaymentService {
     /**
      * resilience4j maxAttempts 설정한 횟수 전부 실패시 fallback 이 실행
      */
-    private TossPaymentConfirmationWithPspRawDataResponse fallbackPaymentExecutor(PaymentConfirmInPut request, Exception exception) throws JsonProcessingException {
+    private TossPaymentConfirmationWithPspRawDataResponse fallbackPaymentExecutor(PaymentConfirmInPut request, Exception exception) {
         log.error("fallbackPaymentExecutor! your request is {}, errorMessage={}", request, exception.getMessage());
 
         String pspRawData = this.extractPspRawData(exception);
@@ -67,7 +67,7 @@ public class TossPaymentService {
 
         return TossPaymentConfirmationWithPspRawDataResponse.of(request, tossFailureResponse, pspRawData);
     }
-    
+
     /**
      * <h1><Toss> 결제 승인 조회</h1> </br>
      **/
