@@ -1,12 +1,11 @@
 package com.payment_testing.domain.product.repository;
 
+import com.payment_testing.IntegrationTestSupport;
 import com.payment_testing.domain.payment.model.entity.Product;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,9 +15,7 @@ import static org.assertj.core.api.Assertions.tuple;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ActiveProfiles("test")
-@SpringBootTest
-class ProductRepositoryTest {
+class ProductRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private ProductRepository productRepository;

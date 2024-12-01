@@ -1,11 +1,11 @@
 package com.payment_testing.api.payment.service;
 
+import com.payment_testing.IntegrationTestSupport;
 import com.payment_testing.api.payment.model.request.PaymentCheckOutRequest;
 import com.payment_testing.api.payment.model.request.PaymentConfirmRequest;
 import com.payment_testing.api.payment.model.response.PaymentCheckOutResponse;
 import com.payment_testing.api.payment.model.response.PaymentEventOutPut;
 import com.payment_testing.api.payment.model.response.PaymentOrderOutPut;
-import com.payment_testing.client.TossPaymentClient;
 import com.payment_testing.domain.payment.enums.PaymentOrderStatus;
 import com.payment_testing.domain.payment.model.entity.Product;
 import com.payment_testing.domain.payment.model.request.PaymentConfirmInPut;
@@ -23,10 +23,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
@@ -39,9 +36,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@ActiveProfiles("test")
-@SpringBootTest
-class PaymentConfirmApiServiceTest {
+class PaymentConfirmApiServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ProductRepository productRepository;
@@ -64,8 +59,6 @@ class PaymentConfirmApiServiceTest {
     @Autowired
     private PaymentEventQueryService paymentEventQueryService;
 
-    @MockBean
-    protected TossPaymentClient tossPaymentClient;
 
     @AfterEach
     void tearDown() {

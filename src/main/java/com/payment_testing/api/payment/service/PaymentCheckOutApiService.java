@@ -27,6 +27,7 @@ public class PaymentCheckOutApiService {
     @Transactional
     public PaymentCheckOutResponse paymentCheckOut(PaymentCheckOutRequest request) {
 
+
         List<ProductOutPut> productList
                 = productQueryService.selectProductListByProductNoList(request.getProductNoList());
 
