@@ -3,7 +3,7 @@ spring:
     activate:
       on-profile: test
   datasource:
-    url: jdbc:h2:mem:~/cafeKioskApplication
+    url: jdbc:h2:mem:~/payment_testing
     driver-class-name: org.h2.Driver
     username: sa
     password:
