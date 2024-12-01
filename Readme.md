@@ -3,7 +3,7 @@
 자세한 설명은 
 
 https://syh8088.github.io/2024/12/02/JAVA/TEST/PaymentTesting/PaymentTesting1
-https://syh8088.github.io/2024/12/02/JAVA/TEST/PaymentTesting/PaymentTesting2
+https://syh8088.github.io/2024/12/03/JAVA/TEST/PaymentTesting/PaymentTesting2
 
 에서 정리 되어 있습니다. 참고 부탁드립니다.
 
