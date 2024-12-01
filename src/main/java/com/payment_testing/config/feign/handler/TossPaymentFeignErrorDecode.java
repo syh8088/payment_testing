@@ -1,8 +1,9 @@
-package com.payment_testing.client;
+package com.payment_testing.config.feign.handler;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.payment_testing.common.utils.JsonUtils;
+import com.payment_testing.config.feign.FeignResponseUtils;
 import com.payment_testing.domain.payment.enums.TossPaymentError;
 import com.payment_testing.domain.payment.model.response.toss.TossFailureResponse;
 import com.payment_testing.error.errorCode.PSPErrorCode;

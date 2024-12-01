@@ -1,4 +1,4 @@
-package com.payment_testing.client;
+package com.payment_testing.config.feign;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

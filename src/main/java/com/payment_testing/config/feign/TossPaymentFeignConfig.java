@@ -1,5 +1,6 @@
-package com.payment_testing.client;
+package com.payment_testing.config.feign;
 
+import com.payment_testing.config.feign.handler.TossPaymentFeignErrorDecode;
 import feign.Logger;
 import feign.codec.Encoder;
 import feign.form.spring.SpringFormEncoder;

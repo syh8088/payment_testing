@@ -1,6 +1,7 @@
 package com.payment_testing.client;
 
 
+import com.payment_testing.config.feign.TossPaymentFeignConfig;
 import com.payment_testing.domain.payment.model.request.PaymentConfirmInPut;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
