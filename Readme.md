@@ -17,6 +17,7 @@ https://syh8088.github.io/2024/12/03/JAVA/TEST/PaymentTesting/PaymentTesting2
 - Spring boot 3.2.0
 - Junit5
 - JPA
+- QueryDsl
 - Mysql 8.x
 
 #### 결제 프로세스 설명
