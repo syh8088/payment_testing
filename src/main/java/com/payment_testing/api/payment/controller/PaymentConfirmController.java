@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -22,12 +20,9 @@ public class PaymentConfirmController {
 
     @PostMapping("confirm")
     public ApiResponse<?> paymentConfirm(@RequestBody PaymentConfirmRequest request) {
-        LocalDateTime registeredDateTime = LocalDateTime.now();
 
         paymentConfirmApiService.paymentConfirm(request);
-
-        return null;
-//        return ApiResponse.ok(orderService.createOrder(request.toServiceRequest(), registeredDateTime));
+        return ApiResponse.noContent();
     }
 
 }
