@@ -1,6 +1,5 @@
 package com.payment_testing.domain.payment.service.toss;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.JsonObject;
 import com.payment_testing.client.TossPaymentClient;
 import com.payment_testing.common.properties.TossPaymentProperties;
