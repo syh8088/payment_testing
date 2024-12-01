@@ -67,42 +67,7 @@ public class TossPaymentService {
 
         return TossPaymentConfirmationWithPspRawDataResponse.of(request, tossFailureResponse, pspRawData);
     }
-
-
-//    @Retry(name = PAYMENT_RETRY_CONFIG, fallbackMethod = "fallbackPaymentCancelPart")
-//    @Transactional(propagation = Propagation.NOT_SUPPORTED)
-//    public HyosungPaymentCancelPartWithPspRawDataResponse paymentCancelPart(PaymentCancelPartInPut paymentCancelPartInPut) {
-//
-//        return this.feignPaymentCancelPart(paymentCancelPartInPut); // [효성] 카드 부분 취소
-//    }
-//
-//    /**
-//     * resilience4j maxAttempts 설정한 횟수 전부 실패시 fallback 이 실행
-//     */
-//    private HyosungPaymentCancelPartWithPspRawDataResponse fallbackPaymentCancelPart(PaymentCancelPartInPut paymentCancelPartInPut, Exception exception) {
-//        log.error("fallbackPaymentCancelPart! your request is {}, errorMessage={}", paymentCancelPartInPut, exception.getMessage());
-//
-//        String pspRawData = this.extractPspRawData(exception);
-//        return HyosungPaymentCancelPartWithPspRawDataResponse.initDueToError(paymentCancelPartInPut, exception, pspRawData);
-//    }
-//
-//    @Retry(name = PAYMENT_RETRY_CONFIG, fallbackMethod = "fallbackPaymentCancel")
-//    @Transactional(propagation = Propagation.NOT_SUPPORTED)
-//    public HyosungPaymentCancelWithPspRawDataResponse paymentCancel(PaymentCancelInPut paymentCancelInPut) {
-//
-//        return this.feignPaymentCancel(paymentCancelInPut); // [효성] 카드 부분 취소
-//    }
-//
-//    /**
-//     * resilience4j maxAttempts 설정한 횟수 전부 실패시 fallback 이 실행
-//     */
-//    private HyosungPaymentCancelWithPspRawDataResponse fallbackPaymentCancel(PaymentCancelInPut paymentCancelInPut, Exception exception) {
-//        log.error("fallbackPaymentCancel! your request is {}, errorMessage={}", paymentCancelInPut, exception.getMessage());
-//
-//        String pspRawData = this.extractPspRawData(exception);
-//        return HyosungPaymentCancelWithPspRawDataResponse.initDueToError(paymentCancelInPut, exception, pspRawData);
-//    }
-
+    
     /**
      * <h1><Toss> 결제 승인 조회</h1> </br>
      **/
@@ -138,60 +103,6 @@ public class TossPaymentService {
 
         return TossPaymentConfirmationWithPspRawDataResponse.of(tossPaymentConfirmationResponse, responseJson);
     }
-
-//
-//    /**
-//     * <h1><Toss> 카드 부분 취소</h1> </br>
-//     *
-//     * @author hun
-//     * @version 1.0.0
-//     * @date 2024/06/26
-//     **/
-//    private HyosungPaymentCancelPartWithPspRawDataResponse feignPaymentCancelPart(PaymentCancelPartInPut paymentCancelPartInPut) {
-//
-//        final HyosungPaymentCancelPartRequest hyosungPaymentCancelPartRequest =
-//                new HyosungPaymentCancelPartRequest(
-//                        paymentCancelPartInPut.getCancelAmount(),
-//                        paymentCancelPartInPut.getCancelVatAmount(),
-//                        paymentCancelPartInPut.getCancelRemainAmount()
-//                );
-//
-//        final ResponseEntity<String> postPaymentsResponse = hyosungCreditCardRequestClient.postCancelPartPayments(paymentCancelPartInPut.getPaymentKey(), hyosungPaymentCancelPartRequest);
-//        final JsonObject jsonObject = JsonUtils.fromJson(postPaymentsResponse.getBody(), JsonObject.class);
-//
-//        HyosungPaymentCancelPartResponse hyosungPaymentCancelPartResponse = JsonUtils.fromJson(jsonObject.get("payment").toString(), HyosungPaymentCancelPartResponse.class);
-//
-//        return new HyosungPaymentCancelPartWithPspRawDataResponse(hyosungPaymentCancelPartResponse, jsonObject.toString());
-//    }
-//
-//    /**
-//     * <h1><Toss> 카드 전체 취소</h1> </br>
-//     *
-//     * @author hun
-//     * @version 1.0.0
-//     * @date 2024/07/12
-//     **/
-//    public HyosungPaymentCancelWithPspRawDataResponse feignPaymentCancel(PaymentCancelInPut paymentCancelInPut) {
-//
-//        final ResponseEntity<String> postPaymentsResponse = hyosungCreditCardRequestClient.postCancelPayments(paymentCancelInPut.getPaymentKey());
-//        final JsonObject jsonObject = JsonUtils.fromJson(postPaymentsResponse.getBody(), JsonObject.class);
-//
-//        HyosungPaymentCancelResponse hyosungPaymentCancelResponse = JsonUtils.fromJson(jsonObject.get("payment").toString(), HyosungPaymentCancelResponse.class);
-//
-//        return new HyosungPaymentCancelWithPspRawDataResponse(hyosungPaymentCancelResponse, jsonObject.toString());
-//    }
-
-
-    /**
-     * <h1>[결제] ID 생성</h1> </br>
-     *
-     * @author hun
-     * @version 1.0.0
-     * @date 2024/06/24
-     **/
-//    private String generateTransactionId(String paymentKey) {
-//        return (StringUtils.hasText(paymentKey)) ? paymentKey : Gen.paymentIdb64uuid();
-//    }
 
     private String extractPspRawData(Exception exception) {
 
