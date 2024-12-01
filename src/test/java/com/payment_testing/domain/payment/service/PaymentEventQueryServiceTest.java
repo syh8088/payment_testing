@@ -59,10 +59,10 @@ class PaymentEventQueryServiceTest {
 
         // then
         assertThat(paymentEventOutPutList).hasSize(2)
-                .extracting("paymentEventNo", "orderId")
+                .extracting("orderId", "isPaymentDone")
                 .containsExactlyInAnyOrder(
-                        tuple(1L, orderId1),
-                        tuple(2L, orderId2)
+                        tuple(orderId1, false),
+                        tuple(orderId2, false)
                 );
 
         for (PaymentEventOutPut paymentEventOutPut : paymentEventOutPutList) {
