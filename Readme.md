@@ -35,3 +35,81 @@ https://syh8088.github.io/2024/12/03/JAVA/TEST/PaymentTesting/PaymentTesting2
 6. 응답과 동시에 결제 서비스 서버로 Redirect 발생됩니다.
 7. 최종적으로 결제 승인을 처리 하기 위해 사용자가 구매한 결제를 최종적으로 성공 했다는 사실을 Toss 서버에 전달 합니다. 성공시 최종적으로 결제가 완료 됩니다. 동시에 결제 상태 업데이트를 하게 됩니다.
 
+#### DB 초기 셋팅
+```mysql
+create schema payment_testing;
+
+create table payment_testing.members
+(
+    no         bigint auto_increment
+        primary key,
+    name       varchar(50)                        not null,
+    created_at datetime default CURRENT_TIMESTAMP not null,
+    updated_at datetime default CURRENT_TIMESTAMP not null
+);
+
+create table payment_testing.payment_events
+(
+    no              bigint auto_increment
+        primary key,
+    member_no       bigint                               null,
+    is_payment_done tinyint(1) default 0                 not null,
+    payment_key     varchar(255)                         null,
+    order_id        varchar(255)                         null,
+    type            enum ('NORMAL')                      not null,
+    order_name      varchar(255)                         null,
+    method          enum ('CARD')                        null,
+    psp_raw_data    text                                 null,
+    approved_at     datetime                             null,
+    created_at      datetime   default CURRENT_TIMESTAMP not null,
+    updated_at      datetime   default CURRENT_TIMESTAMP not null,
+    constraint order_id
+        unique (order_id),
+    constraint payment_key
+        unique (payment_key)
+);
+
+create table payment_testing.payment_orders
+(
+    no                   bigint auto_increment
+        primary key,
+    payment_event_no     bigint                                                                                       not null,
+    product_no           bigint                                                                                       not null,
+    order_id             varchar(255)                                                                                 not null,
+    amount               decimal(12, 2)                                                                               not null,
+    payment_order_status enum ('NOT_STARTED', 'EXECUTING', 'SUCCESS', 'FAILURE', 'UNKNOWN') default 'NOT_STARTED'     not null,
+    failed_count         tinyint                                                            default 0                 not null,
+    threshold            tinyint                                                            default 5                 not null,
+    created_at           datetime                                                           default CURRENT_TIMESTAMP not null,
+    updated_at           datetime                                                           default CURRENT_TIMESTAMP not null
+);
+
+create table payment_testing.payment_order_histories
+(
+    no               bigint auto_increment
+        primary key,
+    payment_order_no bigint                                                             not null,
+    previous_status  enum ('NOT_STARTED', 'EXECUTING', 'SUCCESS', 'FAILURE', 'UNKNOWN') null,
+    new_status       enum ('NOT_STARTED', 'EXECUTING', 'SUCCESS', 'FAILURE', 'UNKNOWN') null,
+    created_at       datetime default CURRENT_TIMESTAMP                                 not null,
+    updated_at       datetime default CURRENT_TIMESTAMP                                 not null,
+    changed_by       varchar(255)                                                       null,
+    reason           varchar(255)                                                       null
+);
+
+create table payment_testing.products
+(
+    no         bigint auto_increment
+        primary key,
+    product_id varchar(255)                       not null,
+    name       varchar(50)                        not null,
+    price      decimal(12, 2)                     not null,
+    created_at datetime default CURRENT_TIMESTAMP not null,
+    updated_at datetime default CURRENT_TIMESTAMP not null
+);
+
+
+INSERT INTO payment_testing.products (no, product_id, name, price, created_at, updated_at) VALUES (1, 'A', '상품A', 1000.00, '2024-11-28 22:55:09', '2024-11-28 22:55:09');
+INSERT INTO payment_testing.products (no, product_id, name, price, created_at, updated_at) VALUES (2, 'B', '상품B', 2000.00, '2024-11-28 22:55:09', '2024-11-28 22:55:09');
+INSERT INTO payment_testing.products (no, product_id, name, price, created_at, updated_at) VALUES (3, 'C', '상품C', 3000.00, '2024-11-28 22:55:09', '2024-11-28 22:55:09');
+```
